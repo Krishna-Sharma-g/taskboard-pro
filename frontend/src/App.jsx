@@ -1,5 +1,5 @@
 "use client"
-//jaideep ki jai ho
+
 import { Routes, Route, Navigate } from "react-router-dom"
 import { useAuth } from "./context/AuthContext"
 
