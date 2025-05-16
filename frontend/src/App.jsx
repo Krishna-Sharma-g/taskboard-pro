@@ -1,26 +1,31 @@
 "use client"
+
 import { Routes, Route, Navigate } from "react-router-dom"
-import { useAuth } from "./context/AuthContext.jsx"
+import { useAuth } from "./context/AuthContext"
 
 // Components
-import Navbar from "./components/Navbar.jsx"
-import Login from "./components/auth/Login.jsx"
-import Register from "./components/auth/Register.jsx"
-import Dashboard from "./components/Dashboard.jsx"
-import ProjectDetails from "./components/projects/ProjectDetails.jsx"
-import CreateProject from "./components/projects/CreateProject.jsx"
+import Navbar from "./components/Navbar"
+import Login from "./components/auth/Login"
+import Register from "./components/auth/Register"
+import Dashboard from "./components/Dashboard"
+import ProjectDetails from "./components/projects/ProjectDetails"
+import CreateProject from "./components/projects/CreateProject"
 
 function App() {
     const { isAuthenticated, loading } = useAuth()
 
     if (loading) {
-        return <div>Loading...</div>
+        return (
+            <div className="loading-container">
+                <div className="loader"></div>
+            </div>
+        )
     }
 
     return (
-        <>
+        <div className="app">
             <Navbar />
-            <div className="container">
+            <main className="main-content">
                 <Routes>
                     <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
                     <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
@@ -28,8 +33,8 @@ function App() {
                     <Route path="/projects/new" element={isAuthenticated ? <CreateProject /> : <Navigate to="/login" />} />
                     <Route path="/projects/:id" element={isAuthenticated ? <ProjectDetails /> : <Navigate to="/login" />} />
                 </Routes>
-            </div>
-        </>
+            </main>
+        </div>
     )
 }
 

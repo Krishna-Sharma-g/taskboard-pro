@@ -1,6 +1,5 @@
-"use client"
-
-import Badge from "./Badge.jsx"
+import Badge from "./Badge"
+import "./BadgesList.css"
 
 const BadgesList = ({ badges, size = "small" }) => {
     if (!badges || badges.length === 0) {
@@ -8,25 +7,14 @@ const BadgesList = ({ badges, size = "small" }) => {
     }
 
     return (
-        <div style={styles.container}>
+        <div className="badges-container">
             {badges.map((badge, index) => (
-                <div key={`badge-${index}`} style={styles.badgeItem}>
+                <div key={`badge-${index}`} className="badge-list-item">
                     <Badge name={badge.name} size={size} />
                 </div>
             ))}
         </div>
     )
-}
-
-const styles = {
-    container: {
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "6px",
-    },
-    badgeItem: {
-        marginBottom: "4px",
-    },
 }
 
 export default BadgesList
