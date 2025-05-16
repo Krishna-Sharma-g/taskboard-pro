@@ -10,7 +10,7 @@
     min-width: 300px;
     max-width: 320px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-color);
@@ -19,18 +19,18 @@
 }
 
 .kanban-column.to-do {
-    background-color: #f8fafc;
-    border-color: #e2e8f0;
+    background-color: #1a2234;
+    border-color: #334155;
 }
 
 .kanban-column.in-progress {
-    background-color: #eff6ff;
-    border-color: #bfdbfe;
+    background-color: #172554;
+    border-color: #1e40af;
 }
 
 .kanban-column.done {
-    background-color: #f0fdf4;
-    border-color: #bbf7d0;
+    background-color: #14532d;
+    border-color: #15803d;
 }
 
 .column-over {
@@ -52,21 +52,21 @@
 }
 
 .to-do-header {
-    background-color: #f1f5f9;
-    color: #475569;
-    border-color: #e2e8f0;
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border-color: #334155;
 }
 
 .in-progress-header {
-    background-color: #dbeafe;
-    color: #2563eb;
-    border-color: #bfdbfe;
+    background-color: #1e3a8a;
+    color: #93c5fd;
+    border-color: #1e40af;
 }
 
 .done-header {
-    background-color: #dcfce7;
-    color: #16a34a;
-    border-color: #bbf7d0;
+    background-color: #14532d;
+    color: #86efac;
+    border-color: #15803d;
 }
 
 .status-name {
@@ -74,7 +74,7 @@
 }
 
 .task-count {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 2px 10px;
     font-size: 14px;
@@ -92,11 +92,11 @@
 }
 
 .task-card {
-    background-color: white;
+    background-color: var(--bg-secondary);
     border-radius: 10px;
     padding: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -107,7 +107,7 @@
 
 .task-card:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     border-color: var(--primary-color);
 }
 
@@ -166,7 +166,8 @@
     font-size: 13px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -183,8 +184,8 @@
 
 .delete-button {
     padding: 8px 12px;
-    background-color: #fee2e2;
-    color: #b91c1c;
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
     border: none;
     border-radius: 8px;
     font-size: 13px;
@@ -194,7 +195,7 @@
 }
 
 .delete-button:hover {
-    background-color: #fecaca;
+    background-color: rgba(239, 68, 68, 0.3);
     transform: translateY(-2px);
 }
 
