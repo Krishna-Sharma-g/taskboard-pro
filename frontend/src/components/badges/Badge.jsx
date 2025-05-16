@@ -4,10 +4,10 @@ const Badge = ({ name, size = "small" }) => {
     // Define badge colors based on name
     const getBadgeColor = (badgeName) => {
         const colors = {
-            Completed: { bg: "#e6f7ee", text: "#0d904f" },
-            "On Time": { bg: "#e6f0ff", text: "#0066cc" },
-            "Star Performer": { bg: "#fff8e6", text: "#cc8800" },
-            default: { bg: "#f0f0f0", text: "#666666" },
+            Completed: { bg: "#dcfce7", text: "#14532d", border: "#86efac" },
+            "On Time": { bg: "#dbeafe", text: "#1e3a8a", border: "#93c5fd" },
+            "Star Performer": { bg: "#fef9c3", text: "#713f12", border: "#fde047" },
+            default: { bg: "#f3f4f6", text: "#374151", border: "#d1d5db" },
         }
 
         return colors[badgeName] || colors.default
@@ -18,19 +18,19 @@ const Badge = ({ name, size = "small" }) => {
     // Define size styles
     const sizeStyles = {
         small: {
-            padding: "2px 6px",
+            padding: "3px 8px",
             fontSize: "12px",
-            borderRadius: "4px",
+            borderRadius: "12px",
         },
         medium: {
-            padding: "4px 8px",
-            fontSize: "14px",
-            borderRadius: "4px",
+            padding: "4px 10px",
+            fontSize: "13px",
+            borderRadius: "14px",
         },
         large: {
-            padding: "6px 12px",
-            fontSize: "16px",
-            borderRadius: "6px",
+            padding: "5px 12px",
+            fontSize: "14px",
+            borderRadius: "16px",
         },
     }
 
@@ -38,7 +38,9 @@ const Badge = ({ name, size = "small" }) => {
         display: "inline-block",
         backgroundColor: badgeColor.bg,
         color: badgeColor.text,
-        fontWeight: "bold",
+        fontWeight: "600",
+        border: `1.5px solid ${badgeColor.border}`,
+        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
         ...sizeStyles[size],
     }
 

@@ -122,19 +122,22 @@ const ProjectDetails = () => {
   }
 
   if (loading) {
-    return <div>Loading project...</div>
+    return <div style={styles.loading}>Loading project...</div>
   }
 
   if (!project) {
-    return <div>Project not found</div>
+    return <div style={styles.notFound}>Project not found</div>
   }
 
   const isOwner = user && project.owner && user.id === project.owner._id
 
   return (
-      <div>
-        <div style={styles.header}>
-          <h1>{project.title}</h1>
+      <div style={styles.container}>
+        <div style={styles.projectHeader}>
+          <div style={styles.projectInfo}>
+            <h1 style={styles.projectTitle}>{project.title}</h1>
+            <p style={styles.projectDescription}>{project.description || "No description"}</p>
+          </div>
           <div style={styles.actions}>
             <button onClick={() => navigate("/")} style={styles.backButton}>
               Back to Projects
@@ -148,8 +151,6 @@ const ProjectDetails = () => {
         </div>
 
         {error && <div style={styles.error}>{error}</div>}
-
-        <p style={styles.description}>{project.description || "No description"}</p>
 
         <div style={styles.tabs}>
           <button onClick={() => setActiveTab("tasks")} style={activeTab === "tasks" ? styles.activeTab : styles.tab}>
@@ -166,74 +167,78 @@ const ProjectDetails = () => {
           </button>
         </div>
 
-        {activeTab === "tasks" && (
-            <div>
-              <div style={styles.taskHeader}>
-                <h2>Tasks</h2>
-                <button onClick={() => setShowTaskForm(!showTaskForm)} style={styles.addButton}>
-                  Add Task
-                </button>
-              </div>
+        <div style={styles.tabContent}>
+          {activeTab === "tasks" && (
+              <div>
+                <div style={styles.sectionHeader}>
+                  <h2 style={styles.sectionTitle}>Tasks</h2>
+                  <button onClick={() => setShowTaskForm(!showTaskForm)} style={styles.addButton}>
+                    {showTaskForm ? "Cancel" : "Add Task"}
+                  </button>
+                </div>
 
-              {showTaskForm && (
-                  <TaskForm onSubmit={handleTaskCreate} onCancel={() => setShowTaskForm(false)} project={project} />
-              )}
-
-              <TaskList
-                  tasks={tasks}
-                  statuses={project.statuses}
-                  onStatusChange={handleTaskUpdate}
-                  onDelete={handleTaskDelete}
-                  members={project.members}
-              />
-            </div>
-        )}
-
-        {activeTab === "automations" && (
-            <div>
-              <div style={styles.taskHeader}>
-                <h2>Automations</h2>
-                {isOwner && (
-                    <button onClick={() => setShowAutomationForm(!showAutomationForm)} style={styles.addButton}>
-                      Add Automation
-                    </button>
+                {showTaskForm && (
+                    <TaskForm onSubmit={handleTaskCreate} onCancel={() => setShowTaskForm(false)} project={project} />
                 )}
+
+                <TaskList
+                    tasks={tasks}
+                    statuses={project.statuses}
+                    onStatusChange={handleTaskUpdate}
+                    onDelete={handleTaskDelete}
+                    members={project.members}
+                />
               </div>
+          )}
 
-              {showAutomationForm && (
-                  <AutomationForm
-                      onSubmit={handleAutomationCreate}
-                      onCancel={() => setShowAutomationForm(false)}
-                      project={project}
-                  />
-              )}
+          {activeTab === "automations" && (
+              <div>
+                <div style={styles.sectionHeader}>
+                  <h2 style={styles.sectionTitle}>Automations</h2>
+                  {isOwner && (
+                      <button onClick={() => setShowAutomationForm(!showAutomationForm)} style={styles.addButton}>
+                        {showAutomationForm ? "Cancel" : "Add Automation"}
+                      </button>
+                  )}
+                </div>
 
-              <AutomationList automations={automations} onDelete={handleAutomationDelete} isOwner={isOwner} />
-            </div>
-        )}
+                {showAutomationForm && (
+                    <AutomationForm
+                        onSubmit={handleAutomationCreate}
+                        onCancel={() => setShowAutomationForm(false)}
+                        project={project}
+                    />
+                )}
 
-        {activeTab === "members" && (
-            <div>
-              <h2>Project Members</h2>
-              <div style={styles.membersList}>
-                {project.members &&
-                    project.members.map((member) => (
-                        <div key={member._id || member} style={styles.memberCard}>
-                          <div style={styles.memberName}>{member.name || "Loading..."}</div>
-                          <div style={styles.memberEmail}>{member.email || "Loading..."}</div>
-
-                          {member.badges && member.badges.length > 0 && (
-                              <div style={styles.memberBadges}>
-                                <BadgesList badges={getMemberBadges(member)} />
-                              </div>
-                          )}
-
-                          {project.owner && member._id === project.owner._id && <div style={styles.ownerBadge}>Owner</div>}
-                        </div>
-                    ))}
+                <AutomationList automations={automations} onDelete={handleAutomationDelete} isOwner={isOwner} />
               </div>
-            </div>
-        )}
+          )}
+
+          {activeTab === "members" && (
+              <div>
+                <h2 style={styles.sectionTitle}>Project Members</h2>
+                <div style={styles.membersList}>
+                  {project.members &&
+                      project.members.map((member) => (
+                          <div key={member._id || member} style={styles.memberCard}>
+                            <div style={styles.memberAvatar}>{member.name?.charAt(0) || "?"}</div>
+                            <div style={styles.memberInfo}>
+                              <div style={styles.memberName}>{member.name || "Loading..."}</div>
+                              <div style={styles.memberEmail}>{member.email || "Loading..."}</div>
+
+                              {member.badges && member.badges.length > 0 && (
+                                  <div style={styles.memberBadges}>
+                                    <BadgesList badges={getMemberBadges(member)} />
+                                  </div>
+                              )}
+                            </div>
+                            {project.owner && member._id === project.owner._id && <div style={styles.ownerBadge}>Owner</div>}
+                          </div>
+                      ))}
+                </div>
+              </div>
+          )}
+        </div>
 
         {showInviteForm && <InviteForm onSubmit={handleInviteUser} onCancel={() => setShowInviteForm(false)} />}
       </div>
@@ -241,89 +246,177 @@ const ProjectDetails = () => {
 }
 
 const styles = {
-  header: {
+  container: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "30px 20px",
+  },
+  loading: {
+    textAlign: "center",
+    padding: "50px",
+    fontSize: "18px",
+    color: "#7f8c8d",
+  },
+  notFound: {
+    textAlign: "center",
+    padding: "50px",
+    fontSize: "20px",
+    color: "#e74c3c",
+  },
+  projectHeader: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
+    alignItems: "flex-start",
+    marginBottom: "25px",
+    flexWrap: "wrap",
+    gap: "20px",
+  },
+  projectInfo: {
+    flex: "1",
+  },
+  projectTitle: {
+    fontSize: "32px",
+    fontWeight: "700",
+    color: "#2c3e50",
+    margin: "0 0 10px 0",
+  },
+  projectDescription: {
+    fontSize: "16px",
+    color: "#7f8c8d",
+    margin: "0",
+    lineHeight: "1.6",
   },
   actions: {
     display: "flex",
-    gap: "10px",
+    gap: "12px",
   },
   backButton: {
-    padding: "8px 16px",
-    backgroundColor: "#f0f0f0",
-    color: "#333",
-    border: "none",
-    borderRadius: "4px",
+    padding: "10px 16px",
+    backgroundColor: "#f8f9fa",
+    color: "#2c3e50",
+    border: "1px solid #e9ecef",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "600",
     cursor: "pointer",
+    transition: "all 0.2s ease",
   },
   inviteButton: {
-    padding: "8px 16px",
-    backgroundColor: "#4a6ee0",
+    padding: "10px 16px",
+    backgroundColor: "#3498db",
     color: "#fff",
     border: "none",
-    borderRadius: "4px",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "600",
     cursor: "pointer",
-  },
-  description: {
-    marginBottom: "20px",
-    color: "#666",
+    transition: "all 0.2s ease",
+    boxShadow: "0 2px 5px rgba(52, 152, 219, 0.25)",
   },
   error: {
-    color: "red",
-    marginBottom: "15px",
+    color: "#e74c3c",
+    backgroundColor: "#fadbd8",
+    padding: "15px",
+    borderRadius: "8px",
+    marginBottom: "20px",
+    fontWeight: "500",
   },
   tabs: {
     display: "flex",
-    borderBottom: "1px solid #ddd",
-    marginBottom: "20px",
+    borderBottom: "2px solid #f0f0f0",
+    marginBottom: "25px",
+    gap: "5px",
   },
   tab: {
-    padding: "10px 20px",
+    padding: "12px 20px",
     backgroundColor: "transparent",
     border: "none",
+    borderBottom: "3px solid transparent",
     cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "500",
+    color: "#7f8c8d",
+    transition: "all 0.3s ease",
+    marginBottom: "-2px",
   },
   activeTab: {
-    padding: "10px 20px",
+    padding: "12px 20px",
     backgroundColor: "transparent",
-    borderBottom: "2px solid #4a6ee0",
-    fontWeight: "bold",
+    border: "none",
+    borderBottom: "3px solid #3498db",
     cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#2c3e50",
+    transition: "all 0.3s ease",
+    marginBottom: "-2px",
   },
-  taskHeader: {
+  tabContent: {
+    padding: "10px 0",
+  },
+  sectionHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "20px",
   },
+  sectionTitle: {
+    fontSize: "24px",
+    fontWeight: "600",
+    color: "#2c3e50",
+    margin: "0",
+  },
   addButton: {
-    padding: "8px 16px",
-    backgroundColor: "#4a6ee0",
+    padding: "10px 18px",
+    backgroundColor: "#3498db",
     color: "#fff",
     border: "none",
-    borderRadius: "4px",
+    borderRadius: "8px",
+    fontSize: "14px",
+    fontWeight: "500",
     cursor: "pointer",
+    transition: "all 0.2s ease",
+    boxShadow: "0 2px 5px rgba(52, 152, 219, 0.25)",
   },
   membersList: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-    gap: "15px",
+    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+    gap: "20px",
+    marginTop: "20px",
   },
   memberCard: {
-    backgroundColor: "#f9f9f9",
-    borderRadius: "4px",
-    padding: "15px",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    padding: "20px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.08)",
     position: "relative",
+    display: "flex",
+    alignItems: "center",
+    gap: "15px",
+  },
+  memberAvatar: {
+    width: "50px",
+    height: "50px",
+    backgroundColor: "#3498db",
+    color: "#fff",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "20px",
+    fontWeight: "600",
+  },
+  memberInfo: {
+    flex: 1,
   },
   memberName: {
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: "17px",
+    color: "#2c3e50",
     marginBottom: "5px",
   },
   memberEmail: {
-    color: "#666",
+    color: "#7f8c8d",
     fontSize: "14px",
     marginBottom: "10px",
   },
@@ -332,13 +425,15 @@ const styles = {
   },
   ownerBadge: {
     position: "absolute",
-    top: "10px",
-    right: "10px",
-    backgroundColor: "#4a6ee0",
+    top: "15px",
+    right: "15px",
+    backgroundColor: "#3498db",
     color: "#fff",
-    padding: "3px 6px",
-    borderRadius: "4px",
+    padding: "5px 10px",
+    borderRadius: "20px",
     fontSize: "12px",
+    fontWeight: "600",
+    boxShadow: "0 2px 5px rgba(52, 152, 219, 0.25)",
   },
 }
 

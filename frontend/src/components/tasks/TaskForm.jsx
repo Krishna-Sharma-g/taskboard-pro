@@ -32,15 +32,28 @@ const TaskForm = ({ onSubmit, onCancel, project, task }) => {
 
   return (
       <div style={styles.formContainer}>
-        <h3>{task ? "Edit Task" : "Create New Task"}</h3>
+        <h3 style={styles.formTitle}>{task ? "Edit Task" : "Create New Task"}</h3>
         {error && <div style={styles.error}>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div style={styles.formGroup}>
-            <label htmlFor="title">Title</label>
-            <input type="text" id="title" name="title" value={title} onChange={onChange} style={styles.input} required />
+            <label htmlFor="title" style={styles.label}>
+              Title
+            </label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                value={title}
+                onChange={onChange}
+                style={styles.input}
+                placeholder="Enter task title"
+                required
+            />
           </div>
           <div style={styles.formGroup}>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description" style={styles.label}>
+              Description
+            </label>
             <textarea
                 id="description"
                 name="description"
@@ -48,24 +61,35 @@ const TaskForm = ({ onSubmit, onCancel, project, task }) => {
                 onChange={onChange}
                 style={styles.textarea}
                 rows="3"
+                placeholder="Enter task description (optional)"
             ></textarea>
           </div>
-          <div style={styles.formGroup}>
-            <label htmlFor="dueDate">Due Date</label>
-            <input type="date" id="dueDate" name="dueDate" value={dueDate} onChange={onChange} style={styles.input} />
+
+          <div style={styles.formRow}>
+            <div style={styles.formGroup}>
+              <label htmlFor="dueDate" style={styles.label}>
+                Due Date
+              </label>
+              <input type="date" id="dueDate" name="dueDate" value={dueDate} onChange={onChange} style={styles.input} />
+            </div>
+            <div style={styles.formGroup}>
+              <label htmlFor="status" style={styles.label}>
+                Status
+              </label>
+              <select id="status" name="status" value={status} onChange={onChange} style={styles.select}>
+                {project.statuses.map((s, index) => (
+                    <option key={`status-${index}`} value={s}>
+                      {s}
+                    </option>
+                ))}
+              </select>
+            </div>
           </div>
+
           <div style={styles.formGroup}>
-            <label htmlFor="status">Status</label>
-            <select id="status" name="status" value={status} onChange={onChange} style={styles.select}>
-              {project.statuses.map((s, index) => (
-                  <option key={`status-${index}`} value={s}>
-                    {s}
-                  </option>
-              ))}
-            </select>
-          </div>
-          <div style={styles.formGroup}>
-            <label htmlFor="assigneeId">Assignee</label>
+            <label htmlFor="assigneeId" style={styles.label}>
+              Assignee
+            </label>
             <select id="assigneeId" name="assigneeId" value={assigneeId} onChange={onChange} style={styles.select}>
               <option value="">Unassigned</option>
               {project.members &&
@@ -76,6 +100,7 @@ const TaskForm = ({ onSubmit, onCancel, project, task }) => {
                   ))}
             </select>
           </div>
+
           <div style={styles.buttonGroup}>
             <button type="button" onClick={onCancel} style={styles.cancelButton}>
               Cancel
@@ -91,60 +116,108 @@ const TaskForm = ({ onSubmit, onCancel, project, task }) => {
 
 const styles = {
   formContainer: {
-    backgroundColor: "#f9f9f9",
-    borderRadius: "8px",
-    padding: "20px",
-    marginBottom: "20px",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    padding: "25px",
+    marginBottom: "25px",
+    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.08)",
+    border: "1px solid #f0f0f0",
+  },
+  formTitle: {
+    margin: "0 0 20px 0",
+    color: "#2c3e50",
+    fontSize: "20px",
+    fontWeight: "600",
   },
   formGroup: {
-    marginBottom: "15px",
+    marginBottom: "20px",
+    width: "100%",
+  },
+  formRow: {
+    display: "flex",
+    gap: "20px",
+    marginBottom: "0",
+  },
+  label: {
+    display: "block",
+    marginBottom: "8px",
+    fontWeight: "500",
+    color: "#2c3e50",
+    fontSize: "15px",
   },
   input: {
     width: "100%",
-    padding: "8px",
+    padding: "12px 15px",
     border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "16px",
+    borderRadius: "8px",
+    fontSize: "15px",
+    boxSizing: "border-box",
+    transition: "border-color 0.3s",
   },
   textarea: {
     width: "100%",
-    padding: "8px",
+    padding: "12px 15px",
     border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "16px",
+    borderRadius: "8px",
+    fontSize: "15px",
     resize: "vertical",
+    minHeight: "100px",
+    boxSizing: "border-box",
+    transition: "border-color 0.3s",
+    fontFamily: "inherit",
   },
   select: {
     width: "100%",
-    padding: "8px",
+    padding: "12px 15px",
     border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "16px",
+    borderRadius: "8px",
+    fontSize: "15px",
+    backgroundColor: "#fff",
+    boxSizing: "border-box",
+    appearance: "none",
+    backgroundImage:
+        "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right 15px center",
+    backgroundSize: "16px",
   },
   buttonGroup: {
     display: "flex",
     justifyContent: "flex-end",
-    gap: "10px",
+    gap: "15px",
+    marginTop: "10px",
   },
   cancelButton: {
-    padding: "8px 16px",
-    backgroundColor: "#f0f0f0",
-    color: "#333",
-    border: "none",
-    borderRadius: "4px",
+    padding: "12px 20px",
+    backgroundColor: "#f8f9fa",
+    color: "#2c3e50",
+    border: "1px solid #e9ecef",
+    borderRadius: "8px",
+    fontSize: "15px",
+    fontWeight: "500",
     cursor: "pointer",
+    transition: "all 0.2s ease",
   },
   submitButton: {
-    padding: "8px 16px",
-    backgroundColor: "#4a6ee0",
+    padding: "12px 20px",
+    backgroundColor: "#3498db",
     color: "#fff",
     border: "none",
-    borderRadius: "4px",
+    borderRadius: "8px",
+    fontSize: "15px",
+    fontWeight: "500",
     cursor: "pointer",
+    transition: "all 0.2s ease",
+    boxShadow: "0 2px 5px rgba(52, 152, 219, 0.25)",
   },
   error: {
-    color: "red",
-    marginBottom: "15px",
+    color: "#e74c3c",
+    backgroundColor: "#fadbd8",
+    padding: "12px 15px",
+    borderRadius: "8px",
+    marginBottom: "20px",
+    fontSize: "14px",
+    fontWeight: "500",
   },
 }
 
