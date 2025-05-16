@@ -12,6 +12,10 @@ import BadgesList from "../badges/BadgesList"
 import Loader from "../common/Loader"
 import { useAuth } from "../../context/AuthContext"
 import "./styles/ProjectDetails.css"
+// Add import for TaskBadgeForm
+import TaskBadgeForm from "../tasks/TaskBadgeForm"
+// Add import for BadgeManager
+import BadgeManager from "../badges/BadgeManager"
 
 const ProjectDetails = () => {
   const { id } = useParams()
@@ -26,6 +30,9 @@ const ProjectDetails = () => {
   const [showInviteForm, setShowInviteForm] = useState(false)
   const [showAutomationForm, setShowAutomationForm] = useState(false)
   const [activeTab, setActiveTab] = useState("tasks")
+  // Add state for badge form
+  const [showBadgeForm, setShowBadgeForm] = useState(false)
+  const [selectedTaskId, setSelectedTaskId] = useState(null)
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -123,6 +130,30 @@ const ProjectDetails = () => {
     return member.badges.filter((badge) => badge.project && badge.project.toString() === id)
   }
 
+  // Add handler for badge button click
+  const handleAddBadge = (taskId) => {
+    setSelectedTaskId(taskId)
+    setShowBadgeForm(true)
+  }
+
+  // Add handler for badge form success
+  const handleBadgeSuccess = () => {
+    setShowBadgeForm(false)
+    setSelectedTaskId(null)
+
+    // Refresh tasks
+    const fetchTasks = async () => {
+      try {
+        const tasksRes = await axios.get(`/tasks/project/${id}`)
+        setTasks(tasksRes.data)
+      } catch (err) {
+        setError("Error refreshing tasks: " + (err.response?.data?.message || err.message))
+      }
+    }
+
+    fetchTasks()
+  }
+
   if (loading) {
     return (
         <div className="loading-container">
@@ -166,6 +197,7 @@ const ProjectDetails = () => {
               </div>
           )}
 
+          {/* Add a new tab for badges */}
           <div className="tabs">
             <button onClick={() => setActiveTab("tasks")} className={activeTab === "tasks" ? "active-tab" : "tab"}>
               <span className="tab-icon">📋</span>
@@ -181,6 +213,10 @@ const ProjectDetails = () => {
             <button onClick={() => setActiveTab("members")} className={activeTab === "members" ? "active-tab" : "tab"}>
               <span className="tab-icon">👥</span>
               Members
+            </button>
+            <button onClick={() => setActiveTab("badges")} className={activeTab === "badges" ? "active-tab" : "tab"}>
+              <span className="tab-icon">🏆</span>
+              Badges
             </button>
           </div>
 
@@ -203,11 +239,22 @@ const ProjectDetails = () => {
                       </div>
                   )}
 
+                  {showBadgeForm && selectedTaskId && (
+                      <div className="form-container">
+                        <TaskBadgeForm
+                            taskId={selectedTaskId}
+                            onSuccess={handleBadgeSuccess}
+                            onCancel={() => setShowBadgeForm(false)}
+                        />
+                      </div>
+                  )}
+
                   <TaskList
                       tasks={tasks}
                       statuses={project.statuses}
                       onStatusChange={handleTaskUpdate}
                       onDelete={handleTaskDelete}
+                      onAddBadge={handleAddBadge}
                       members={project.members}
                   />
                 </div>
@@ -269,6 +316,14 @@ const ProjectDetails = () => {
                             </div>
                         ))}
                   </div>
+                </div>
+            )}
+
+            {/* Add the badges tab content */}
+            {activeTab === "badges" && (
+                <div className="tab-panel">
+                  <h2 className="section-title">Project Badges</h2>
+                  <BadgeManager projectId={id} />
                 </div>
             )}
           </div>

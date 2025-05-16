@@ -4,7 +4,7 @@ import { useState } from "react"
 import BadgesList from "../badges/BadgesList"
 import "./TaskList.css"
 
-const TaskList = ({ tasks, statuses, onStatusChange, onDelete, members }) => {
+const TaskList = ({ tasks, statuses, onStatusChange, onDelete, onAddBadge, members }) => {
   const [draggingTask, setDraggingTask] = useState(null)
   const [dragOverStatus, setDragOverStatus] = useState(null)
 
@@ -51,6 +51,14 @@ const TaskList = ({ tasks, statuses, onStatusChange, onDelete, members }) => {
   const handleDragEnd = () => {
     setDraggingTask(null)
     setDragOverStatus(null)
+  }
+
+  // Add a new function to handle adding badges to a task
+  const handleAddBadge = (taskId) => {
+    // This function will be implemented in the ProjectDetails component
+    if (onAddBadge) {
+      onAddBadge(taskId)
+    }
   }
 
   return (
@@ -108,6 +116,9 @@ const TaskList = ({ tasks, statuses, onStatusChange, onDelete, members }) => {
                                 </option>
                             ))}
                           </select>
+                          <button onClick={() => handleAddBadge(task._id)} className="badge-button" title="Add Badge">
+                            🏆
+                          </button>
                           <button onClick={() => onDelete(task._id)} className="delete-button">
                             Delete
                           </button>

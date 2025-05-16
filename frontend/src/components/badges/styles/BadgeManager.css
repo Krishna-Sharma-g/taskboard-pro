@@ -1,0 +1,228 @@
+.badge-manager {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.badge-stats {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid #334155;
+}
+
+.stats-title,
+.recent-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #334155;
+}
+
+.stats-section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #94a3b8;
+    margin: 0 0 15px 0;
+}
+
+.badge-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.badge-count-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #0f172a;
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: 1px solid #334155;
+}
+
+.badge-count {
+    font-weight: 600;
+    color: #e2e8f0;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.user-badges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.user-badge-item {
+    background-color: #0f172a;
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #334155;
+    transition: all 0.3s ease;
+}
+
+.user-badge-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    border-color: #3a6df0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.user-rank {
+    background-color: #3a6df0;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #e2e8f0;
+    font-size: 16px;
+}
+
+.user-badge-count {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.user-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.user-badge-type {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.recent-badges {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid #334155;
+}
+
+.recent-badges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recent-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #0f172a;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    transition: all 0.3s ease;
+}
+
+.recent-badge-item:hover {
+    transform: translateY(-3px);
+    border-color: #3a6df0;
+}
+
+.badge-details {
+    flex: 1;
+}
+
+.badge-task {
+    font-weight: 500;
+    color: #e2e8f0;
+    margin-bottom: 5px;
+}
+
+.badge-date {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.badge-manager-loading {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.badge-manager-error {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.badge-manager-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #94a3b8;
+    background-color: #1e293b;
+    border-radius: 12px;
+    border: 1px solid #334155;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.empty-hint {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #64748b;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .badge-counts {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-info {
+        flex-wrap: wrap;
+    }
+
+    .user-badge-count {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .recent-badge-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

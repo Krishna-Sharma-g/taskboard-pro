@@ -157,7 +157,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 12px;
-    gap: 10px;
+    gap: 8px;
 }
 
 .status-select {
@@ -245,4 +245,21 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.badge-button {
+    padding: 8px 12px;
+    background-color: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.badge-button:hover {
+    background-color: rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
 }

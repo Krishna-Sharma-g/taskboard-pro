@@ -1,0 +1,175 @@
+.create-project-page {
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.create-project-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.create-project-card {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid #334155;
+    animation: slideInUp 0.5s ease-in-out;
+}
+
+.create-project-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin: 0 0 25px 0;
+    text-align: center;
+    background: linear-gradient(135deg, #e2e8f0 0%, #3a6df0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.create-project-error {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.2);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.create-project-error::before {
+    content: "⚠️";
+    margin-right: 8px;
+}
+
+.create-project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #e2e8f0;
+    font-size: 15px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    background-color: #0f172a;
+    color: #e2e8f0;
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #3a6df0;
+    box-shadow: 0 0 0 2px rgba(58, 109, 240, 0.25);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    padding: 12px 20px;
+    background-color: transparent;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+.cancel-btn:hover {
+    background-color: #0f172a;
+}
+
+.submit-btn {
+    padding: 12px 20px;
+    background-color: #3a6df0;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(58, 109, 240, 0.25);
+    min-width: 150px;
+}
+
+.submit-btn:hover {
+    background-color: #5a89ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(58, 109, 240, 0.3);
+}
+
+@media (max-width: 480px) {
+    .create-project-card {
+        padding: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
